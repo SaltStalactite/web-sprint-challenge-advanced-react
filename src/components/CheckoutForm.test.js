@@ -9,4 +9,30 @@ test("renders without errors", () => {
     render(<CheckoutForm />)
 });
 
-test("shows success message on submit with form details", () => { });
+test("shows success message on submit with form details", () => {
+    render(<CheckoutForm />)
+
+    const firstName = screen.getByLabelText(/First Name/i)
+    userEvent.type(firstName, 'Chris')
+
+    const lastName = screen.getByLabelText(/Last Name/i)
+    userEvent.type(lastName, 'Castillo')
+
+    const addressInput = screen.getByLabelText(/Address/i)
+    userEvent.type(addressInput, '123 St')
+
+    const cityInput = screen.getByLabelText(/City/i)
+    userEvent.type(cityInput, 'Orlando')
+
+    const stateInput = screen.getByLabelText(/State/i)
+    userEvent.type(stateInput, 'Florida')
+
+    const zipInput = screen.getByLabelText(/Zip/i)
+    userEvent.type(zipInput, '12345')
+
+    const button = screen.getByRole('button')
+    userEvent.click(button)
+
+    const success = screen.getByTestId('successMessage')
+    expect(success).toBeInTheDocument();
+});
